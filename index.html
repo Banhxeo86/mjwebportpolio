@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epidemic Insight | 고성능 감염병 확산 시뮬레이터</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette - Premium Neon/Cyber */
+            --bg-deep: #05070a;
+            --bg-gradient: radial-gradient(circle at 50% 50%, #1a1f35 0%, #05070a 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-accent: rgba(0, 245, 212, 0.1);
+            
+            --accent-cyan: #00f5d4;
+            --accent-pink: #ff2d55;
+            --accent-purple: #7b2ffb;
+            --accent-yellow: #fee440;
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-dim: rgba(255, 255, 255, 0.4);
+
+            --healthy: var(--accent-cyan);
+            --infected: var(--accent-pink);
+            --recovered: var(--accent-purple);
+            --dead: #4a4e69;
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            background-image: var(--bg-gradient);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Layout --- */
+        header {
+            height: 70px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header-meta {
+            font-family: 'JetBrains+Mono', monospace;
+            font-size: 12px;
+            color: var(--accent-cyan);
+            background: var(--glass-accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            text-transform: uppercase;
+        }
+
+        .main-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 20px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* --- Generic Components --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        /* --- Left Panel: Controls --- */
+        .controls-panel {
+            overflow-y: auto;
+        }
+
+        .control-group {
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .control-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-cyan);
+            background: rgba(0, 245, 212, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 245, 212, 0.5);
+            transition: var(--transition);
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 0 24px 24px;
+        }
+
+        .btn-preset {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-preset:hover {
+            background: var(--glass-accent);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* --- Middle Panel: Simulation --- */
+        .simulation-area {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+
+        #simCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .simulation-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            pointer-events: none;
+        }
+
+        .status-badge {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 8px var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* --- Right Panel: Analytics --- */
+        .analytics-panel {
+            gap: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 24px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .graph-container {
+            flex: 1;
+            padding: 0 24px 24px;
+        }
+
+        #graphCanvas {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* --- Action Bar --- */
+        .action-bar {
+            padding: 0 24px 24px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-main {
+            flex: 1;
+            height: 50px;
+            border-radius: 16px;
+            border: none;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--accent-cyan), #00d2b4);
+            color: var(--bg-deep);
+            box-shadow: 0 10px 20px rgba(0, 245, 212, 0.2);
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 245, 212, 0.3);
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+        /* Progress Bar */
+        .global-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            margin: 0 20px;
+            overflow: hidden;
+            display: flex;
+        }
+        .progress-segment { height: 100%; transition: width 0.5s ease; }
+
+        /* Tooltip-like Legend */
+        .legend {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 24px 12px;
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .legend-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">E</div>
+            <h1>Epidemic Insight | 감염병 확산 시뮬레이터</h1>
+        </div>
+        <div class="header-meta" id="sim-status-text">시스템 준비됨</div>
+    </header>
+
+    <div class="main-container">
+        <!-- Parameters -->
+        <aside class="glass-panel controls-panel">
+            <div class="panel-header">
+                <span class="panel-title">설정 변수</span>
+            </div>
+            <div class="control-group">
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">총 인원</span>
+                        <span class="control-value" id="val-pop">200</span>
+                    </div>
+                    <input type="range" id="param-pop" min="50" max="600" value="200" step="10">
+                </div>
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">초기 감염자</span>
+                        <span class="control-value" id="val-init">3</span>
+                    </div>
+                    <input type="range" id="param-init" min="1" max="20" value="3">
+                </div>
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">전염률</span>
+                        <span class="control-value" id="val-rate">45%</span>
+                    </div>
+                    <input type="range" id="param-rate" min="5" max="100" value="45">
+                </div>
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">이동 속도</span>
+                        <span class="control-value" id="val-speed">2.0</span>
+                    </div>
+                    <input type="range" id="param-speed" min="0.5" max="5" value="2" step="0.5">
+                </div>
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">마스크 착용률</span>
+                        <span class="control-value" id="val-mask">0%</span>
+                    </div>
+                    <input type="range" id="param-mask" min="0" max="95" value="0">
+                </div>
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">회복 기간 (일)</span>
+                        <span class="control-value" id="val-rec">10</span>
+                    </div>
+                    <input type="range" id="param-rec" min="3" max="30" value="10">
+                </div>
+                <div class="control-item">
+                    <div class="control-label-row">
+                        <span class="control-label">치명률</span>
+                        <span class="control-value" id="val-mort">2%</span>
+                    </div>
+                    <input type="range" id="param-mort" min="0" max="30" value="2">
+                </div>
+            </div>
+
+            <div class="panel-header" style="border-top: 1px solid var(--glass-border);">
+                <span class="panel-title">시나리오 프리셋</span>
+            </div>
+            <div class="preset-grid">
+                <div class="btn-preset" onclick="applyPreset('standard')">일반 독감</div>
+                <div class="btn-preset" onclick="applyPreset('deadly')">흑사병 (고치명)</div>
+                <div class="btn-preset" onclick="applyPreset('lockdown')">도시 봉쇄</div>
+                <div class="btn-preset" onclick="applyPreset('vax')">높은 면역력</div>
+            </div>
+        </aside>
+
+        <!-- Simulation -->
+        <main class="simulation-area">
+            <div class="global-progress">
+                <div id="prog-h" class="progress-segment" style="background:var(--healthy); width:100%"></div>
+                <div id="prog-i" class="progress-segment" style="background:var(--infected); width:0%"></div>
+                <div id="prog-r" class="progress-segment" style="background:var(--recovered); width:0%"></div>
+                <div id="prog-d" class="progress-segment" style="background:var(--dead); width:0%"></div>
+            </div>
+            
+            <div class="canvas-container">
+                <div class="simulation-overlay">
+                    <div class="status-badge">
+                        <div class="status-dot"></div>
+                        실시간 시뮬레이션 필드
+                    </div>
+                </div>
+                <canvas id="simCanvas"></canvas>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item"><div class="legend-dot" style="background:var(--healthy)"></div>건강함</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--infected)"></div>감염됨</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--recovered)"></div>회복됨</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--dead)"></div>사망함</div>
+            </div>
+        </main>
+
+        <!-- Analytics -->
+        <aside class="glass-panel analytics-panel">
+            <div class="panel-header">
+                <span class="panel-title">실시간 통계</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">감염자 수</span>
+                    <span class="stat-value" id="stat-i" style="color:var(--infected)">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">회복자 수</span>
+                    <span class="stat-value" id="stat-r" style="color:var(--recovered)">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">사망자 수</span>
+                    <span class="stat-value" id="stat-d" style="color:var(--dead)">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">경과 일수</span>
+                    <span class="stat-value" id="stat-day" style="color:var(--accent-yellow)">0</span>
+                </div>
+            </div>
+
+            <div class="graph-container">
+                <canvas id="graphCanvas"></canvas>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn-main btn-start" id="btn-toggle" onclick="toggleSimulation()">
+                    <span id="btn-icon">▶</span> <span id="btn-text">시뮬레이션 시작</span>
+                </button>
+                <button class="btn-main btn-reset" onclick="resetSimulation()">
+                    초기화
+                </button>
+            </div>
+
+            <div style="padding: 0 24px 20px; font-size: 11px; color: var(--text-dim); text-align: center; border-top: 1px solid var(--glass-border); padding-top: 15px;">
+                © 2026 AI-ON 교과연구회. All Rights Reserved.
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const simCanvas = document.getElementById('simCanvas');
+        const graphCanvas = document.getElementById('graphCanvas');
+        const sCtx = simCanvas.getContext('2d');
+        const gCtx = graphCanvas.getContext('2d');
+
+        let people = [];
+        let running = false;
+        let rafId = null;
+        let tick = 0;
+        let history = [];
+        const DAY_TICKS = 60;
+
+        const COLORS = {
+            healthy: '#00f5d4',
+            infected: '#ff2d55',
+            recovered: '#7b2ffb',
+            dead: '#4a4e69'
+        };
+
+        function getParam(id) { return parseFloat(document.getElementById('param-' + id).value); }
+
+        function resize() {
+            const sRect = simCanvas.parentElement.getBoundingClientRect();
+            simCanvas.width = sRect.width;
+            simCanvas.height = sRect.height;
+
+            const gRect = graphCanvas.parentElement.getBoundingClientRect();
+            graphCanvas.width = gRect.width;
+            graphCanvas.height = gRect.height;
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            render();
+            renderGraph();
+        });
+
+        class Person {
+            constructor(infected = false) {
+                this.radius = 5;
+                this.x = Math.random() * (simCanvas.width - this.radius * 2) + this.radius;
+                this.y = Math.random() * (simCanvas.height - this.radius * 2) + this.radius;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = getParam('speed');
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                
+                this.state = infected ? 'infected' : 'healthy';
+                this.timer = infected ? getParam('rec') * DAY_TICKS : 0;
+                this.pulse = 0;
+            }
+
+            update() {
+                if (this.state === 'dead') return;
+
+                const speedMultiplier = getParam('speed');
+                this.x += this.vx * (speedMultiplier / 2);
+                this.y += this.vy * (speedMultiplier / 2);
+
+                if (this.x < this.radius || this.x > simCanvas.width - this.radius) this.vx *= -1;
+                if (this.y < this.radius || this.y > simCanvas.height - this.radius) this.vy *= -1;
+
+                if (this.state === 'infected') {
+                    this.timer--;
+                    this.pulse += 0.1;
+                    if (this.timer <= 0) {
+                        const mort = getParam('mort') / 100;
+                        this.state = Math.random() < mort ? 'dead' : 'recovered';
+                    }
+                }
+            }
+
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = COLORS[this.state];
+                
+                if (this.state === 'infected') {
+                    ctx.shadowBlur = 10 + Math.sin(this.pulse) * 5;
+                    ctx.shadowColor = COLORS.infected;
+                    // Infection ring
+                    ctx.strokeStyle = `rgba(255, 45, 85, ${0.3 + Math.sin(this.pulse) * 0.2})`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+                
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function initSimulation() {
+            people = [];
+            const pop = getParam('pop');
+            const init = getParam('init');
+            
+            for (let i = 0; i < pop; i++) {
+                people.push(new Person(i < init));
+            }
+            tick = 0;
+            history = [];
+            updateUI();
+            render();
+            renderGraph();
+        }
+
+        function toggleSimulation() {
+            running = !running;
+            const btnText = document.getElementById('btn-text');
+            const btnIcon = document.getElementById('btn-icon');
+            const statusText = document.getElementById('sim-status-text');
+
+            if (running) {
+                btnText.textContent = '엔진 일시정지';
+                btnIcon.textContent = '⏸';
+                statusText.textContent = '시뮬레이션 활성화됨';
+                statusText.style.color = 'var(--accent-pink)';
+                loop();
+            } else {
+                btnText.textContent = '시뮬레이션 재개';
+                btnIcon.textContent = '▶';
+                statusText.textContent = '시뮬레이션 일시정지됨';
+                statusText.style.color = 'var(--accent-yellow)';
+                cancelAnimationFrame(rafId);
+            }
+        }
+
+        function resetSimulation() {
+            running = false;
+            cancelAnimationFrame(rafId);
+            document.getElementById('btn-text').textContent = '시뮬레이션 시작';
+            document.getElementById('btn-icon').textContent = '▶';
+            document.getElementById('sim-status-text').textContent = '시스템 준비됨';
+            document.getElementById('sim-status-text').style.color = 'var(--accent-cyan)';
+            initSimulation();
+        }
+
+        function loop() {
+            update();
+            render();
+            if (running) rafId = requestAnimationFrame(loop);
+        }
+
+        function update() {
+            const rate = getParam('rate') / 100;
+            const mask = getParam('mask') / 100;
+            const effRate = rate * (1 - mask);
+            const recT = getParam('rec') * DAY_TICKS;
+
+            people.forEach(p => p.update());
+
+            // Transmission logic
+            const infected = people.filter(p => p.state === 'infected');
+            people.forEach(p => {
+                if (p.state !== 'healthy') return;
+                for (let q of infected) {
+                    const dist = Math.hypot(p.x - q.x, p.y - q.y);
+                    if (dist < 15) {
+                        if (Math.random() < effRate * 0.05) {
+                            p.state = 'infected';
+                            p.timer = recT;
+                            break;
+                        }
+                    }
+                }
+            });
+
+            tick++;
+            if (tick % DAY_TICKS === 0) {
+                recordHistory();
+                updateUI();
+            }
+
+            // Stop if no one is infected
+            if (infected.length === 0 && tick > DAY_TICKS) {
+                running = false;
+                document.getElementById('sim-status-text').textContent = '시뮬레이션 완료';
+                document.getElementById('sim-status-text').style.color = 'var(--accent-cyan)';
+            }
+        }
+
+        function recordHistory() {
+            const counts = { healthy: 0, infected: 0, recovered: 0, dead: 0 };
+            people.forEach(p => counts[p.state]++);
+            history.push(counts);
+            renderGraph();
+        }
+
+        function render() {
+            sCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
+            // Subtle Grid
+            sCtx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            sCtx.lineWidth = 1;
+            for(let x=0; x<simCanvas.width; x+=40) {
+                sCtx.beginPath(); sCtx.moveTo(x, 0); sCtx.lineTo(x, simCanvas.height); sCtx.stroke();
+            }
+            for(let y=0; y<simCanvas.height; y+=40) {
+                sCtx.beginPath(); sCtx.moveTo(0, y); sCtx.lineTo(simCanvas.width, y); sCtx.stroke();
+            }
+
+            people.forEach(p => p.draw(sCtx));
+        }
+
+        function updateUI() {
+            const counts = { healthy: 0, infected: 0, recovered: 0, dead: 0 };
+            people.forEach(p => counts[p.state]++);
+            const total = people.length || 1;
+
+            document.getElementById('stat-i').textContent = counts.infected;
+            document.getElementById('stat-r').textContent = counts.recovered;
+            document.getElementById('stat-d').textContent = counts.dead;
+            document.getElementById('stat-day').textContent = Math.floor(tick / DAY_TICKS);
+
+            document.getElementById('prog-h').style.width = (counts.healthy / total * 100) + '%';
+            document.getElementById('prog-i').style.width = (counts.infected / total * 100) + '%';
+            document.getElementById('prog-r').style.width = (counts.recovered / total * 100) + '%';
+            document.getElementById('prog-d').style.width = (counts.dead / total * 100) + '%';
+        }
+
+        function renderGraph() {
+            const w = graphCanvas.width;
+            const h = graphCanvas.height;
+            gCtx.clearRect(0, 0, w, h);
+            
+            if (history.length < 2) return;
+
+            const total = people.length;
+            const step = w / (history.length - 1);
+            
+            const drawLine = (key, color) => {
+                gCtx.beginPath();
+                gCtx.strokeStyle = color;
+                gCtx.lineWidth = 3;
+                gCtx.lineJoin = 'round';
+                history.forEach((data, i) => {
+                    const x = i * step;
+                    const y = h - (data[key] / total * h) * 0.8 - (h * 0.1);
+                    if (i === 0) gCtx.moveTo(x, y);
+                    else gCtx.lineTo(x, y);
+                });
+                gCtx.stroke();
+                
+                // Area fill
+                gCtx.lineTo(w, h);
+                gCtx.lineTo(0, h);
+                gCtx.fillStyle = color + '11';
+                gCtx.fill();
+            };
+
+            drawLine('infected', COLORS.infected);
+            drawLine('recovered', COLORS.recovered);
+            drawLine('dead', COLORS.dead);
+        }
+
+        function applyPreset(name) {
+            const presets = {
+                standard: { pop: 200, init: 3, rate: 45, speed: 2, mask: 0, rec: 10, mort: 2 },
+                deadly: { pop: 300, init: 5, rate: 80, speed: 3, mask: 0, rec: 14, mort: 25 },
+                lockdown: { pop: 200, init: 10, rate: 45, speed: 0.5, mask: 80, rec: 10, mort: 2 },
+                vax: { pop: 400, init: 5, rate: 15, speed: 2.5, mask: 90, rec: 7, mort: 0.5 }
+            };
+            const p = presets[name];
+            for (let key in p) {
+                const el = document.getElementById('param-' + key);
+                el.value = p[key];
+                el.dispatchEvent(new Event('input'));
+            }
+            resetSimulation();
+        }
+
+        // Slider sync
+        document.querySelectorAll('input[type=range]').forEach(input => {
+            input.addEventListener('input', e => {
+                const id = e.target.id.replace('param-', 'val-');
+                let val = e.target.value;
+                if (id.includes('rate') || id.includes('mask') || id.includes('mort')) val += '%';
+                document.getElementById(id).textContent = val;
+            });
+        });
+
+        // Initialize
+        resize();
+        initSimulation();
+
+    </script>
+</body>
+</html>
