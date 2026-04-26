@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자 경력 - 명진</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #f9fbff;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --accent: #5dade2;
+            --accent-soft: #ebf5fb;
+            --border: #eef2f7;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        header {
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .profile-subtitle {
+            color: var(--text-sub);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .career-item {
+            position: relative;
+            padding-left: 24px;
+            border-left: 2px solid var(--accent-soft);
+            margin-bottom: 30px;
+        }
+
+        .career-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .career-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+
+        .career-date {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .career-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .career-desc {
+            font-size: 15px;
+            color: var(--text-sub);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1-fr));
+            gap: 16px;
+        }
+
+        .skill-tag {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-tag i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-sub);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            section {
+                padding: 30px 20px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <a href="Index.html" class="back-link">
+                <i data-lucide="arrow-left" style="width:16px;height:16px"></i>
+                포트폴리오로 돌아가기
+            </a>
+            <h1>명진 (Myungjin)</h1>
+            <p class="profile-subtitle">Creative Developer & AI Enthusiast</p>
+        </header>
+
+        <section>
+            <h2><i data-lucide="user"></i> About Me</h2>
+            <p>사용자 경험을 최우선으로 생각하는 개발자입니다. AI 기술과 창의적인 디자인을 결합하여 가치 있는 웹 서비스를 만드는 데 열정을 가지고 있습니다.</p>
+        </section>
+
+        <section>
+            <h2><i data-lucide="briefcase"></i> Experience</h2>
+
+            <div class="career-item">
+                <p class="career-date">2024 - Present</p>
+                <h3 class="career-title">AI-ON 교과연구회 리드 개발자</h3>
+                <p class="career-desc">교육용 AI 웹앱 개발 및 교육 자동화 솔루션 설계. Gemini API 및 Cursor를 활용한 생산성 향상 연구.</p>
+            </div>
+
+            <div class="career-item">
+                <p class="career-date">2023 - 2024</p>
+                <h3 class="career-title">프리랜서 풀스택 개발자</h3>
+                <p class="career-desc">다양한 클라이언트의 요구에 맞춘 반응형 웹사이트 및 업무 자동화 툴 개발.</p>
+            </div>
+
+            <div class="career-item">
+                <p class="career-date">2022 - 2023</p>
+                <h3 class="career-title">웹 앱 서비스 인턴</h3>
+                <p class="career-desc">프론트엔드 UI/UX 개선 및 사용자 인터랙션 설계 보조.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2><i data-lucide="wrench"></i> Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-tag"><i data-lucide="code"></i> Javascript</div>
+                <div class="skill-tag"><i data-lucide="layout"></i> HTML/CSS</div>
+                <div class="skill-tag"><i data-lucide="bot"></i> Gemini AI</div>
+                <div class="skill-tag"><i data-lucide="terminal"></i> Apps Script</div>
+                <div class="skill-tag"><i data-lucide="zap"></i> Cursor</div>
+                <div class="skill-tag"><i data-lucide="github"></i> Git/GitHub</div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 명진. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
