@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>경력 사항 | Career Portfolio</title>
+    <title>경력 사항 | Career Profile</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,15 +13,14 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --surface-hover: #334155;
-            --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.3);
-            --text-main: #f1f5f9;
-            --text-sub: #94a3b8;
-            --accent: #f472b6;
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #f9fbff;
+            --surface: #ffffff;
+            --primary: #5dade2;
+            --primary-soft: #ebf5fb;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --border: #eef2f7;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -38,50 +37,17 @@
             color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Background Decoration */
-        .bg-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .glow-1 {
-            position: absolute;
-            top: -10%;
-            right: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .glow-2 {
-            position: absolute;
-            bottom: -10%;
-            left: -10%;
-            width: 40vw;
-            height: 40vw;
-            background: radial-gradient(circle, rgba(244, 114, 182, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 80px 24px;
+            padding: 60px 24px;
         }
 
         header {
-            margin-bottom: 80px;
-            text-align: center;
-            animation: fadeInDown 0.8s ease-out;
+            margin-bottom: 50px;
+            text-align: left; /* 좌측 정렬 */
         }
 
         .back-link {
@@ -92,99 +58,62 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            margin-bottom: 40px;
-            padding: 8px 16px;
-            border-radius: 100px;
-            background: var(--surface);
-            border: 1px solid var(--border);
+            margin-bottom: 24px;
             transition: var(--transition);
         }
 
         .back-link:hover {
             color: var(--primary);
-            border-color: var(--primary);
-            transform: translateX(-5px);
+            transform: translateX(-4px);
         }
 
         h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(32px, 8vw, 56px);
-            font-weight: 800;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
         }
 
-        .header-desc {
-            color: var(--text-sub);
-            font-size: clamp(16px, 4vw, 20px);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Grid Layout */
-        .career-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 32px;
-        }
-
-        @media (max-width: 768px) {
-            .career-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Single Column Layout */
+        .career-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         section {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 32px;
+            border-radius: 24px;
             padding: 40px;
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow);
             transition: var(--transition);
-            animation: fadeInUp 0.8s ease-out both;
+            animation: fadeInUp 0.6s ease-out both;
         }
 
         section:hover {
-            transform: translateY(-8px);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        section:hover::before {
-            opacity: 1;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            border-color: var(--primary);
         }
 
         h2 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            color: #fff;
+            gap: 12px;
+            color: var(--text-main);
         }
 
         .category-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(56, 189, 248, 0.1);
-            border-radius: 14px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-soft);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -195,13 +124,13 @@
         .timeline {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .timeline-item {
             display: flex;
             gap: 20px;
-            position: relative;
+            padding-left: 4px;
         }
 
         .year {
@@ -210,74 +139,48 @@
             font-weight: 700;
             color: var(--primary);
             min-width: 45px;
-            padding-top: 4px;
+            padding-top: 2px;
         }
 
         .content {
             font-size: 16px;
             color: var(--text-main);
             font-weight: 500;
-            line-height: 1.5;
         }
 
-        /* Custom Colors for each section */
-        .sec-swai { border-top: 1px solid var(--primary); }
-        .sec-steam { border-top: 1px solid var(--accent); }
-
         footer {
-            margin-top: 100px;
+            margin-top: 60px;
             text-align: center;
             padding: 40px 0;
             color: var(--text-sub);
-            font-size: 14px;
+            font-size: 13px;
             border-top: 1px solid var(--border);
         }
 
-        /* Animations */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @media (max-width: 600px) {
+            .container { padding: 40px 20px; }
+            h1 { font-size: 32px; }
+            section { padding: 30px 20px; }
         }
-
-        /* Staggered animation for sections */
-        section:nth-child(1) { animation-delay: 0.1s; }
-        section:nth-child(2) { animation-delay: 0.2s; }
-        section:nth-child(3) { animation-delay: 0.3s; }
-        section:nth-child(4) { animation-delay: 0.4s; }
-        section:nth-child(5) { animation-delay: 0.5s; }
-        section:nth-child(6) { animation-delay: 0.6s; }
-        section:nth-child(7) { animation-delay: 0.7s; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--surface-hover); }
     </style>
 </head>
 
 <body>
-    <div class="bg-glow">
-        <div class="glow-1"></div>
-        <div class="glow-2"></div>
-    </div>
-
     <div class="container">
         <header>
             <a href="index.html" class="back-link">
                 <i data-lucide="arrow-left" style="width:16px;height:16px"></i>
-                메인 포트폴리오
+                메인페이지로
             </a>
             <h1>Career Experience</h1>
-            <p class="header-desc">교육과 기술의 융합을 통해 더 나은 미래를 설계하는 교육 전문가로서의 발자취입니다.</p>
         </header>
 
-        <div class="career-grid">
+        <div class="career-stack">
             <!-- SW‧AI -->
             <section>
                 <h2>
@@ -399,7 +302,7 @@
         </div>
 
         <footer>
-            <p>© 2026 Portfolio. All rights reserved.</p>
+            <p>© 2026 AI-ON 교과연구회. All rights reserved.</p>
         </footer>
     </div>
 
@@ -409,4 +312,5 @@
 </body>
 
 </html>
+
 
