@@ -52,7 +52,7 @@ const projects = [
                 title: "연구회 홈페이지",
                 description: "Antigravity로 제작한 연구회 공식 홈페이지입니다.",
                 link: "https://aionweb-xi.vercel.app/",
-                icon: "homepage"
+                icon: "home"
             }
         ]
     },
