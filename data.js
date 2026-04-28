@@ -13,10 +13,10 @@ const projects = [
         icon: "layout",
         items: [
             {
-                title: "디자인 템플릿 탐색기",
-                description: "Canva와 Gemini AI를 활용하여 최적의 디자인 레이아웃을 추천해주는 도구입니다.",
-                link: "#",
-                icon: "image"
+                title: "우리반 바탕화면",
+                description: "우리반과 관련된 정보를 Html로 만들어 배경화면으로 설정하는 자료입니다.",
+                link: "https://banhxeo86.github.io/-/",
+                icon: "school"
             }
         ]
     },
