@@ -25,11 +25,29 @@ const projects = [
         icon: "code-2",
         items: [
             {
-                title: "구글 시트 자동화 봇",
-                description: "구글 앱스 스크립트를 이용한 업무 자동화 및 데이터 시각화 툴 모음입니다.",
-                link: "#",
-                icon: "table"
+                title: "과학토론 문제 생성기",
+                description: "구글 API를 활용한 제미나이 기반 과학토론 문제 생성기",
+                link: "https://script.google.com/macros/s/AKfycbwWvSBoxbfo_n_rbjc6Uz9OZQEqQjga9q99mu6GlPg-brHckSE6knQ02bWE4McUij7D/exec",
+                icon: "flask-conical"
             }
+
+            {
+                title: "일기쓰기 도우미",
+                description: "학생들이 쓴 일기를 제출하여 DB로 관리하는 웹앱",
+                link: "https://script.google.com/macros/s/AKfycbwp0OPKGbjGiHkZHVt6rg-ggnB0qIx2nr4W0cMunWs/dev",
+                icon: "book-text"
+            }
+
+
+            {
+                title: "연구회 협의록",
+                description: "연구회 협의를 위해 작성한 웹앱. 내용 수정 및 작성. 작성된 내용 DB로 자동 저",
+                link: "https://script.google.com/macros/s/AKfycbzH6XJhjCrXCbXJLJHtrVjOir6hm2du0JO1lVJz-jM/dev",
+                icon: "speech"
+            }
+
+            
+            
         ]
     },
     {
@@ -37,11 +55,34 @@ const projects = [
         icon: "cpu",
         items: [
             {
-                title: "프롬프트 튜닝 연구소",
-                description: "AI Studio를 통해 다양한 모델의 프롬프트를 테스트하고 최적화하는 워크스페이스입니다.",
-                link: "#",
-                icon: "terminal"
+                title: "우리가 만드는 사회 웹앱",
+                description: "개념기반 교육과정 운영을 위한 사회 교과 문제 출제 및 해설 생성 웹앱.",
+                link: "https://service-69394360653.asia-south1.run.app/",
+                icon: "book-open-text"
             }
+
+             {
+                title: "알파벳 매칭게임",
+                description: "카드게임 형태로 알파벳 대/소문자를 학습할 수 있는 교육용 게임.",
+                link: "https://alphamatch-alphabet-card-memory-game-69394360653.asia-south1.run.app",
+                icon: "book-a"
+            }
+
+            
+            {
+                title: "구구단 카드배틀",
+                description: "카드게임 형태로 서로 대결하며 구구단을 학습하는 교육용 게임.",
+                link: "https://multiplication-battle-964240085349.asia-south1.run.app",
+                icon: "copy-x"
+            }
+
+            {
+                title: "구구단 카드배틀(교사용)",
+                description: "구구단 카드배틀 방생성 및 학생관리를 할 수 있는 관리자용 웹앱.",
+                link: "https://multiplication-battle-964240085349.asia-south1.run.app/teacher",
+                icon: "presentation"
+            }            
+            
         ]
     },
     {
@@ -61,11 +102,19 @@ const projects = [
         icon: "more-horizontal",
         items: [
             {
-                title: "새로운 프로젝트",
-                description: "아이디어가 떠오르면 새로운 웹앱이 이곳에 추가됩니다.",
-                link: "#",
-                icon: "plus"
+                title: "AI 토론&토의 주제 생성기",
+                description: "토론 토의 주제를 생성할 수 있는 스트림릿 기반 웹앱.",
+                link: "https://debate-aion.streamlit.app/",
+                icon: "messages-square"
             }
+
+            {
+                title: "스마트 점수판",
+                description: "체육 시간에 활용할 수 있는 스마트 점수판.",
+                link: "https://smart-scoreboard1.streamlit.app/",
+                icon: "volleyball"
+            }
+            
         ]
     }
 ];
