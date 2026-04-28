@@ -5,34 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>웹앱 포트폴리오</title>
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap"
-        rel="stylesheet">
-    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Pastel & Professional Palette (Muted Blues/Greens) */
             --bg: #f9fbff;
             --card-bg: #ffffff;
             --text-main: #2c3e50;
             --text-sub: #7f8c8d;
             --accent: #5dade2;
-            /* Soft Professional Blue */
             --accent-soft: #ebf5fb;
             --border: #eef2f7;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             --shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.06);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
@@ -49,9 +39,7 @@
             padding: 40px 24px;
         }
 
-        /* --- Header --- */
         header {
-            position: relative;
             margin-bottom: 60px;
             display: flex;
             justify-content: space-between;
@@ -65,115 +53,78 @@
             font-size: 38px;
             font-weight: 700;
             letter-spacing: -1px;
-            color: var(--text-main);
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .header-actions { display: flex; align-items: center; gap: 8px; }
 
-        /* Shared base for all header pills */
         .header-pill {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 18px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
+            display: flex; align-items: center; gap: 8px;
+            padding: 9px 18px; border-radius: 100px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none; transition: all 0.3s ease;
         }
 
-        /* Author: Informative Tag */
-        .author-badge {
-            background: var(--bg);
-            color: var(--text-sub);
-            border: 1px solid var(--border);
-            cursor: default;
-        }
+        .career-btn { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+        .contact-btn { background: var(--text-main); color: #fff; }
 
-        /* Career: Secondary Action */
-        .career-btn {
-            background: #fff;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .career-btn:hover {
-            background: var(--accent-soft);
-            transform: translateY(-2px);
-        }
-
-        /* Contact: Primary Action */
-        .contact-btn {
-            background: var(--text-main);
-            color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .contact-btn:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(93, 173, 226, 0.2);
-        }
-
-        .contact-btn:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(93, 173, 226, 0.3);
-        }
-
-        /* --- Category Section --- */
-        .category-section {
-            margin-bottom: 50px;
-        }
-
+        /* --- Category & Slider --- */
+        .category-section { margin-bottom: 60px; position: relative; }
         .category-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-main);
-            padding-left: 4px;
+            font-size: 20px; font-weight: 700; margin-bottom: 24px;
+            display: flex; align-items: center; gap: 12px;
         }
 
-        .category-title i {
-            color: var(--accent);
-            width: 22px;
-            height: 22px;
-        }
-
-        /* --- Horizontal Slider --- */
+        /* Slider Wrapper */
         .slider-wrapper {
             position: relative;
-            margin: 0 -24px;
-            padding: 0 24px;
+            display: flex;
+            align-items: center;
         }
 
         .slider-container {
             display: flex;
             gap: 20px;
             overflow-x: auto;
-            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
             scrollbar-width: none;
-            padding: 10px 0 30px;
+            padding: 10px 0;
+            width: 100%;
         }
 
-        .slider-container::-webkit-scrollbar {
-            display: none;
+        .slider-container::-webkit-scrollbar { display: none; }
+
+        /* Slider Buttons */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            color: var(--text-main);
         }
+
+        .nav-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .prev-btn { left: -20px; }
+        .next-btn { right: -20px; }
 
         /* --- Card --- */
         .project-card {
             flex: 0 0 320px;
-            scroll-snap-align: start;
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -194,189 +145,116 @@
         }
 
         .icon-box {
-            width: 44px;
-            height: 44px;
-            background: var(--accent-soft);
-            color: var(--accent);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .project-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
+            width: 44px; height: 44px;
+            background: var(--accent-soft); color: var(--accent);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
         }
 
         .project-card p {
-            font-size: 14px;
-            color: var(--text-sub);
-            height: 63px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.6;
+            font-size: 14px; color: var(--text-sub);
+            height: 63px; overflow: hidden; line-height: 1.6;
         }
 
         .card-footer {
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--accent);
+            margin-top: auto; display: flex; align-items: center;
+            justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--accent);
         }
 
         .go-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--accent-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--accent-soft); display: flex; align-items: center; justify-content: center;
         }
 
-        .project-card:hover .go-btn {
-            background: var(--accent);
-            color: #fff;
-        }
+        footer { text-align: center; margin-top: 60px; padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-sub); font-size: 13px; }
 
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-            color: var(--text-sub);
-            font-size: 13px;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- Responsive --- */
         @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 24px;
-            }
-
-            .header-content h1 {
-                font-size: 30px;
-            }
-
-            .header-actions {
-                width: 100%;
-                gap: 8px;
-            }
-
-            .header-pill {
-                padding: 8px 14px;
-                font-size: 12px;
-                flex: 1 1 auto;
-                /* Fill width on small screens */
-                justify-content: center;
-            }
-
-            .project-card {
-                flex: 0 0 280px;
-            }
-
-            .container {
-                padding: 30px 20px;
-            }
+            .nav-btn { display: none; } /* 모바일에서는 버튼 숨김 (터치 스크롤) */
+            .project-card { flex: 0 0 280px; }
+            .header-content h1 { font-size: 28px; }
         }
     </style>
 </head>
 
 <body>
-
     <div class="container">
         <header>
-            <div class="header-content">
-                <h1>Web App Collection</h1>
-            </div>
+            <div class="header-content"><h1>Web App Collection</h1></div>
             <div class="header-actions">
-
-                <a href="career.html" class="header-pill career-btn">
-                    <i data-lucide="briefcase" style="width:14px;height:14px"></i>
-                    개발자 경력
-                </a>
-                <a href="https://open.kakao.com/o/p6phjJri" target="_blank" class="header-pill contact-btn">
-                    <i data-lucide="message-circle" style="width:14px;height:14px"></i>
-                    문의하기
-                </a>
+                <a href="career.html" class="header-pill career-btn"><i data-lucide="briefcase" style="width:14px;height:14px"></i>개발자 경력</a>
+                <a href="https://open.kakao.com/o/p6phjJri" target="_blank" class="header-pill contact-btn"><i data-lucide="message-circle" style="width:14px;height:14px"></i>문의하기</a>
             </div>
         </header>
 
-        <main id="main-content">
-            <!-- Categories and Sliders will be injected here -->
-        </main>
+        <main id="main-content"></main>
 
-        <footer>
-            <p>© 2026 AI-ON 교과연구회. All rights reserved.</p>
-        </footer>
+        <footer><p>© 2026 AI-ON 교과연구회. All rights reserved.</p></footer>
     </div>
 
-    <!-- 데이터 로드 (메모장에서 수정 가능한 파일) -->
     <script src="data.js"></script>
-
     <script>
         function renderPortfolio() {
             const main = document.getElementById('main-content');
-
-            // 데이터 파일 로드 확인
             if (typeof projects === 'undefined') {
-                main.innerHTML = '<p style="text-align:center; padding: 50px; color: var(--text-sub);">데이터 파일(data.js)을 불러오지 못했습니다.</p>';
+                main.innerHTML = '<p style="text-align:center; padding: 50px;">데이터를 불러올 수 없습니다.</p>';
                 return;
             }
 
             main.innerHTML = '';
 
-            projects.forEach(group => {
+            projects.forEach((group, index) => {
                 const section = document.createElement('section');
                 section.className = 'category-section';
 
                 section.innerHTML = `
-                    <h2 class="category-title">
-                        <i data-lucide="${group.icon}"></i>
-                        ${group.category}
-                    </h2>
+                    <h2 class="category-title"><i data-lucide="${group.icon}"></i>${group.category}</h2>
                     <div class="slider-wrapper">
-                        <div class="slider-container">
+                        <button class="nav-btn prev-btn" onclick="moveSlider(${index}, -1)"><i data-lucide="chevron-left"></i></button>
+                        <div class="slider-container" id="slider-${index}">
                             ${group.items.map(item => `
-                                <a href="${item.link}" class="project-card" target="_blank" rel="noopener noreferrer">
-                                    <div class="icon-box">
-                                        <i data-lucide="${item.icon}"></i>
-                                    </div>
+                                <a href="${item.link}" class="project-card" target="_blank">
+                                    <div class="icon-box"><i data-lucide="${item.icon}"></i></div>
                                     <h3>${item.title}</h3>
                                     <p>${item.description}</p>
                                     <div class="card-footer">
                                         <span>실행하기</span>
-                                        <div class="go-btn">
-                                            <i data-lucide="chevron-right" style="width:16px;height:16px"></i>
-                                        </div>
+                                        <div class="go-btn"><i data-lucide="chevron-right" style="width:16px;height:16px"></i></div>
                                     </div>
                                 </a>
                             `).join('')}
                         </div>
+                        <button class="nav-btn next-btn" onclick="moveSlider(${index}, 1)"><i data-lucide="chevron-right"></i></button>
                     </div>
                 `;
-
                 main.appendChild(section);
             });
-
-            // Lucide 아이콘 초기화
             lucide.createIcons();
+        }
+
+        // 무한 루프 슬라이더 로직
+        function moveSlider(index, direction) {
+            const slider = document.getElementById(`slider-${index}`);
+            const cards = slider.querySelectorAll('.project-card');
+            const cardWidth = cards[0].offsetWidth + 20; // 카드 너비 + gap
+            
+            const currentScroll = slider.scrollLeft;
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+            if (direction === 1) { // 오른쪽 클릭
+                if (currentScroll >= maxScroll - 5) { // 끝에 도달하면 처음으로
+                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
+            } else { // 왼쪽 클릭
+                if (currentScroll <= 5) { // 처음에 도달하면 끝으로
+                    slider.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                } else {
+                    slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                }
+            }
         }
 
         document.addEventListener('DOMContentLoaded', renderPortfolio);
     </script>
 </body>
-
 </html>
