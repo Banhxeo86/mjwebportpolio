@@ -3,6 +3,7 @@
  * * [수정 완료]
  * - 객체 간 누락된 쉼표(,) 추가
  * - 불필요한 공백 정리
+ * - 아이콘 확인(https://lucide.dev/)
  */
 
 const projects = [
@@ -15,7 +16,31 @@ const projects = [
                 description: "우리반과 관련된 정보를 Html로 만들어 배경화면으로 설정하는 자료입니다.",
                 link: "https://banhxeo86.github.io/-/",
                 icon: "school"
-            }
+            },
+
+            {
+                title: "나라 수도 게임",
+                description: "대결을 하며 여러 나라의 수도를 알아볼 수 있도록 하는 교육용게.",
+                link: "https://banhxeo86.github.io/capital/",
+                icon: "landmark"
+            },          
+
+            
+            {
+                title: "10만들기",
+                description: "10을 만들 수 있는 숫자를 찾아 연결하는 수학 임.",
+                link: "https://banhxeo86.github.io/plus10/",
+                icon: "school"
+            },            
+
+            {
+                title: "뚝딱! 블록 대전",
+                description: "쌓기 나무 모양을 보며 쌓기 나무 개수를 알아보는 수학 게임.",
+                link: "https://banhxeo86.github.io/block1/",
+                icon: "math"
+            },
+            
+            
         ]
     },
     {
