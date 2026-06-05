@@ -148,6 +148,15 @@ const projects = [
                 icon: "home"
             },
 
+
+            {
+                title: "현장체험학습 사전 안내 자료",
+                description: "현장체험학습 일정, 준비물, 안전 수칙 및 장소 정보를 한눈에 확인할 수 있는 디지털 안내서.",
+                link: "https://banhxeo86.github.io/fieldtrip0623/",
+                icon: "bus"
+            },
+     
+            
 {
   title: "자기장 탐구실",
   description: "초등 과학 교육과정 기반, 자석의 성질과 자기장을 힘 지향 그래프 알고리즘으로 시뮬레이션하는 인터랙티브 웹앱.",
