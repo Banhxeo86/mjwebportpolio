@@ -99,6 +99,17 @@ const projects = [
                 link: "https://script.google.com/macros/s/AKfycbwp0OPKGbjGiHkZHVt6rg-ggnB0qIx2nr4W0cMunWs/dev",
                 icon: "book-text"
             }, // 쉼표 추가
+
+
+            {
+                title: "필수연수 이수증 제출 시스템",
+                description: "교직원 연말 필수연수 이수 정보를 입력하고 증빙 파일을 간편하게 제출하는 관리 도구.",
+                link: "https://script.google.com/macros/s/AKfycbx3fN9_tLRmX9emn14owoGehSVbQlwUI-_Ped9B5GgoPZbLLTE8NUVIeu3vd9zJSGo/exec",
+                icon: "file-text"
+            },
+
+
+            
             {
                 title: "연구회 협의록",
                 description: "연구회 협의를 위해 작성한 웹앱. 내용 수정 및 작성. 작성된 내용 DB로 자동 저장",
