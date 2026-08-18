@@ -79,6 +79,31 @@ const projects = [
                 link: "https://banhxeo86.github.io/block1/",
                 icon: "math"
             },
+
+
+            {
+                title: "문장 카드 놀이",
+                description: "단어카드를 활용하여 문장을 만들고 문장구성요소에 대해 학습할 수 있는 자.",
+                link: "https://banhxeo86.github.io/sentence-card/",
+                icon: "columns-4"
+            },
+
+
+            {
+                title: "연수 주제 생성기",
+                description: "41조 연수 주제 생성기.",
+                link: "https://banhxeo86.github.io/41yeonsu/",
+                icon: "columns-4"
+            },            
+            
+
+            {
+                title: "분류하기 게임",
+                description: "전자칠판용 분류하기 대결게임.",
+                link: "https://banhxeo86.github.io/math2_sorting/",
+                icon: "gamepad-directional"
+            },            
+            
             
             
         ]
@@ -93,12 +118,29 @@ const projects = [
                 link: "https://script.google.com/macros/s/AKfycbwWvSBoxbfo_n_rbjc6Uz9OZQEqQjga9q99mu6GlPg-brHckSE6knQ02bWE4McUij7D/exec",
                 icon: "flask-conical"
             }, // 쉼표 추가
+
+            {
+                title: "학생 답안 제출",
+                description: "학생들이 평가 답안지를 제출하여 취합하는 도구",
+                link: "https://script.google.com/macros/s/AKfycbx6-3sTv5srDKlWH8c440ewpL3uxWhyk13OOP1Vf5i-YzQ6nfpo2ylFvJPdlKnfLQ/exec",
+                icon: "book-check"
+            }, // 쉼표 추가
+
+            
+            {
+                title: "우리반 소리함",
+                description: "학생들의 의견을 모아주는 도",
+                link: "https://script.google.com/macros/s/AKfycbyRflrqlk26A76VsQuPKx3o9OSq_YqWxRX2GRKUNoxOtdENL_pvXJ2NX0PhV_Rcjt91/exec",
+                icon: "mailbox"
+            }, // 쉼표 추가
+            
             {
                 title: "일기쓰기 도우미",
                 description: "학생들이 쓴 일기를 제출하여 DB로 관리하는 웹앱",
                 link: "https://script.google.com/macros/s/AKfycbwp0OPKGbjGiHkZHVt6rg-ggnB0qIx2nr4W0cMunWs/dev",
                 icon: "book-text"
             }, // 쉼표 추가
+
 
 
             {
@@ -128,6 +170,10 @@ const projects = [
                 link: "https://service-69394360653.asia-south1.run.app/",
                 icon: "book-open-text"
             }, // 쉼표 추가
+
+
+
+            
             {
                 title: "알파벳 매칭게임",
                 description: "카드게임 형태로 알파벳 대/소문자를 학습할 수 있는 교육용 게임.",
@@ -152,6 +198,40 @@ const projects = [
         category: "Cursor/Antigravity",
         icon: "zap",
         items: [
+
+
+            {
+                title: "체험학습 안내 웹앱1",
+                description: "체험학습 안내 자료 웹앱",
+                link: "https://banhxeo86.github.io/fieldtrip0623/",
+                icon: "bus"
+            },    
+
+            {
+                title: "체험학습 안내 웹앱2",
+                description: "체험학습 안내 자료 웹앱",
+                link: "https://banhxeo86.github.io/fieldtrip0821/",
+                icon: "bus"
+            },    
+            
+            
+            {
+                title: "수학 연산 게임",
+                description: "수학 연산을 연습할 수 있는 학습용 교육자",
+                link: "https://banhxeo86.github.io/MagicCatMathRPG/",
+                icon: "gamepad-2"
+            },            
+            
+            
+            {
+                title: "평가 결과 분석",
+                description: "수학 연산을 연습할 수 있는 학습용 교육자",
+                link: "https://banhxeo86.github.io/26exam-answer-analyzer/",
+                icon: "chart-spline"
+            },            
+                        
+            
+            
             {
                 title: "연구회 홈페이지",
                 description: "Antigravity로 제작한 연구회 공식 홈페이지입니다.",
