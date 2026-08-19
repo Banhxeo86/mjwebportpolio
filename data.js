@@ -195,11 +195,19 @@ const projects = [
         ]
     },
     {
-        category: "Cursor/Antigravity",
+        category: "Cursor/Antigravity/claude",
         icon: "zap",
         items: [
 
 
+            {
+                title: "수학 연산 게임",
+                description: "수학 연산을 연습할 수 있는 학습용 교육자",
+                link: "https://banhxeo86.github.io/MagicCatMathRPG/",
+                icon: "gamepad-2"
+            },            
+            
+            
             {
                 title: "체험학습 안내 웹앱1",
                 description: "체험학습 안내 자료 웹앱",
@@ -216,12 +224,11 @@ const projects = [
             
             
             {
-                title: "수학 연산 게임",
-                description: "수학 연산을 연습할 수 있는 학습용 교육자",
-                link: "https://banhxeo86.github.io/MagicCatMathRPG/",
-                icon: "gamepad-2"
-            },            
-            
+                title: "지구탐험대",
+                description: "6학년 2학기 사회 1단원 학습용 자",
+                link: "https://jigu-explorer.vercel.app/",
+                icon: "bus"
+            },    
             
             {
                 title: "평가 결과 분석",
